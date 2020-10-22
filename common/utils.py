@@ -6,6 +6,7 @@ import numpy as np
 class BBox(object):
     # bbox is a list of [left, right, top, bottom]
     def __init__(self, bbox):
+        self.raw = bbox
         self.left = bbox[0]
         self.right = bbox[1]
         self.top = bbox[2]
