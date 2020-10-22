@@ -25,9 +25,9 @@ to_tensor = transforms.ToTensor()
 # import the landmark detection models
 import onnx
 import onnxruntime
-onnx_model_landmark = onnx.load("pfld.onnx")
+onnx_model_landmark = onnx.load("onnx/pfld.onnx")
 onnx.checker.check_model(onnx_model_landmark)
-ort_session_landmark = onnxruntime.InferenceSession("pfld.onnx")
+ort_session_landmark = onnxruntime.InferenceSession("onnx/pfld.onnx")
 def to_numpy(tensor):
     return tensor.detach().cpu().numpy() if tensor.requires_grad else tensor.cpu().numpy()
 

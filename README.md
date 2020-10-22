@@ -1,20 +1,24 @@
 # Pytorch Face Landmark Detection
-Implementation of face landmark detection with PyTorch. The models were trained using coordinate-based and heatmap-based regression methods. A [video demo](https://lnkd.in/eH27JcP) was displayed here. 
+Implementation of face landmark detection with PyTorch. The models were trained using coordinate-based or heatmap-based regression methods. Different face detetors were supported. A [video demo](https://lnkd.in/eH27JcP) and [image detection](https://github.com/cunjian/pytorch_face_landmark/tree/master/results) results were displayed here. 
 
 * Support 68-point and 39-point landmark inference.
-* Support different backbone networks.
-* Support ONNX inference. 
-* Support heatmap-based inference.
+* Support different backbone networks and face detectors.
+* Support ONNX and OpenVINO inferences. 
+* Support heatmap-based models.
 
 ## Inference
-Test on a sample folder and save the landmark detection results.
-> python3 -W ignore test_batch_mtcnn.py
+Test on a sample folder and save the landmark detection results. Support different backbones and face detectors.
+> python3 test_batch_detections.py --backbone MobileFaceNet --detector Retinaface
+* backbone: MobileNet/PFLD/MobileFaceNet; detector: MTCNN/FaceBoxes/Retinaface
 
 Optimize with ONNX and test on a camera with MTCNN as a face detector. 
-> python3 -W ignore test_camera_mtcnn_onnx.py
+> python3 test_camera_mtcnn_onnx.py
 
 Optimize with ONNX and test on a camera with a lightweight face detector. It can achieve **real-time speed on CPU**.
 > python3 test_camera_light_onnx.py
+
+Optimize with OpenVINO and test on a camera with a lightweight face detector. About 10 times faster than ONNX.
+> python3 test_camera_mobilefacenet_openvino.py
 
 ## Benchmark Results on 300W
 
@@ -38,8 +42,8 @@ Optimize with ONNX and test on a camera with a lightweight face detector. It can
 | [MobileNetV2_ExternalData (224×224)](https://drive.google.com/file/d/1Le5UdpMkKOTRr1sTp4lwkw8263sbgdSe/view?usp=sharing)   |3.48 | 6.0 | 3.96 | 3.74 | 1.2|
 | [MobileNetV2 (56×56)](https://drive.google.com/file/d/10DyP9GqAATXFj64MmXlet84Ewb4ryP1K/view?usp=sharing)  |4.50 | 8.50 | 5.27 | 3.74 | 0.01 ([onnx](https://drive.google.com/file/d/1UkJfsY1Y00IhxuGS-mEZkfKC3ekfFI3G/view?usp=sharing))|
 | [MobileNetV2_SE_ExternalData (56×56)](https://drive.google.com/file/d/1BcfUVGPHlILLlWN4h6E9lbwtz85PUbuW/view?usp=sharing)  |4.10 | 6.89 | 4.64 | 4.10 | 0.01 ([onnx](https://drive.google.com/file/d/1Kw-OKKAzoPxg1hVMvdtCbnCw2GWNC85q/view?usp=sharing))|
-| PFLD_ExternalData (112×112)  | 3.59 | 6.22 | 4.09 | 0.73 | 0.01 ([onnx](https://drive.google.com/file/d/1me3-AC6rVcvVyyxNP7FxqdAN5SoDTj95/view?usp=sharing))|
-| MobileFaceNet_ExternalData (112×112)  | 3.47 | 6.08 | 3.97 | 1.01 | / |
+| [PFLD_ExternalData (112×112)](https://drive.google.com/file/d/1gjgtm6qaBQJ_EY7lQfQj3EuMJCVg9lVu/view?usp=sharing)  | 3.49 | 6.01 | 3.97 | 0.73 | 0.01 ([onnx](https://drive.google.com/file/d/1me3-AC6rVcvVyyxNP7FxqdAN5SoDTj95/view?usp=sharing))|
+| [MobileFaceNet_ExternalData (112×112)](https://drive.google.com/file/d/1T8J73UTcB25BEJ_ObAJczCkyGKW5VaeY/view?usp=sharing)  | 3.30 | 5.69 | 3.76 | 1.01 | / |
 
 > Note: SE (squeeze-and-excitation module), RE (random erasing module).
 
@@ -47,7 +51,7 @@ Optimize with ONNX and test on a camera with a lightweight face detector. It can
 
 | Algorithms | Common | Challenge | Full Set | Param # (M) | 
 |:-:|:-:|:-:|:-:|:-:|
-| Hourglass2  |4.22 | 6.64 | 4.69 | 8.73 | 
+| Hourglass2  | 3.06 | 5.54 | 3.55 | 8.73 | 
 
 ## Visualization Results
 * Face alignment on 300W dataset
@@ -78,9 +82,8 @@ The following features will be added soon.
 
 
 ## References:
-* https://github.com/rwightman/pytorch-image-models
-* https://github.com/Res2Net/Res2Net-PretrainedModels
-* https://github.com/HRNet/HRNet-Image-Classification
+* https://github.com/biubug6/Pytorch_Retinaface
+* https://github.com/cleardusk/3DDFA_V2
 * https://github.com/lzx1413/pytorch_face_landmark
 * https://github.com/polarisZhao/PFLD-pytorch
 
